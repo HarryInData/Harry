@@ -1,0 +1,15 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+df = pd.read_csv(r"C:\Users\HP\Documents\student.csv")
+#print(df.tail( ))
+#print(df.info())
+#print(df.describe())
+#print(df.isnull().sum())
+#print(df.shape)
+# print(df['Gender'].value_counts())
+#print(df['Marks'].mean())
+#plt.hist(df["Marks"],bins=50)
+plt.xlabel("Marks")
+plt.ylabel("Number Of Student")
+plt.title("Distribution Of Marks ")
+plt.show()

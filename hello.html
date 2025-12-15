@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder Guide Kit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+</head>1
+
+
+<body>
+ <style>
+        body { font-family: 'Roboto', Arial, sans-serif; margin: 0; padding: 20px; background-color: #f8f9fa; color: #333; line-height: 1.6; }
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { color: #007bff; margin-bottom: 10px; }
+        h2 { color: #495057; border-bottom: 2px solid #007bff; padding-bottom: 5px; }
+        h3, h4 { color: #343a40; }
+        form { background: #ffffff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 30px; max-width: 800px; margin: auto; }
+        label { display: block; margin-top: 15px; font-weight: 700; color: #495057; }
+        input, textarea { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ced4da; border-radius: 5px; font-size: 14px; }
+        input:focus, textarea:focus { border-color: #007bff; outline: none; }
+        button { background: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 20px; transition: background 0.3s; }
+        button:hover { background: #0056b3; }
+        .template { background: #e9ecef; padding: 20px; margin: 15px 0; border-left: 5px solid #007bff; border-radius: 5px; }
+        #resume-preview { background: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-top: 30px; display: none; max-width: 800px; margin: auto; font-size: 14px; position: relative; }
+        .resume-section { margin-bottom: 20px; }
+        .resume-section h4 { margin-bottom: 10px; text-transform: uppercase; font-size: 16px; color: #007bff; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 5px; }
+        #resume-photo { position: absolute; top: 20px; right: 20px; width: 80px; height: 80px; border-radius: 5px; object-fit: cover; border: 1px solid #ddd; }
+        @media (max-width: 600px) { form, #resume-preview { padding: 15px; } #resume-photo { width: 60px; height: 60px; } }
+    </style>
+    <header>
+        <h1>Resume Builder Guide Kit</h1>
+        <p>Build a professional resume like the examples in the Internshala guide. Input your details below or browse templates.</p>
+    </header>
+
+    <!-- Example Templates Section (From PDF) -->
+    <section id="templates">
+        <h2>Example Templates from Guide Kit</h2>
+        <p>Sample formats based on the PDF (e.g., concise, reverse chronological). Replace with exact PDF text.</p>
+
+        <div class="template">
+            <h3>Template 1: Professional Format (From PDF Example)</h3>
+            <p><strong>Objective:</strong> 4th year B.Tech Computer Science student at IIT Madras with excellent academic record and keen interest in information security.</p>
+            <p><strong>Education:</strong> B.Tech in Computer Science, IIT Madras, 2020-2024 (CGPA: 8.5).</p>
+            <p><strong>Internships:</strong> Software Intern at XYZ Corp, June 2023 - Aug 2023 – Developed web app using Java.</p>
+            <p><strong>Skills:</strong> Java, Python, Web Security.</p>
+            <em>(PDF Note: Keep 1-2 pages, use reverse chronological order.)</em>
+        </div>
+
+        <div class="template">
+            <h3>Template 2: Entry-Level Format (From PDF Example)</h3>
+            <p><strong>Objective:</strong> Eager to apply skills in data analysis for a dynamic role.</p>
+            <p><strong>Education:</strong> B.Sc. Mathematics, Delhi University, 2019-2023 (Aggregate: 85%).</p>
+            <p><strong>Projects:</strong> Data Visualization Project, Jan 2023 – Analyzed datasets using Python.</p>
+            <p><strong>Skills:</strong> Excel, SQL, Team Player.</p>
+            <em>(PDF Note: Highlight relevant courses/projects, avoid irrelevant achievements.)</em>
+        </div>
+    </section>
+
+    <!-- Resume Builder Form -->
+    <section id="builder">
+        <h2>Build Your Resume (Input All Details)</h2>
+        <form id="resume-form">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone">
+
+            <label for="photo">Photo (Optional - Professional headshot, JPEG/PNG, <5MB):</label>
+            <input type="file" id="photo" accept="image/*">
+
+            <label for="objective">Objective/Summary (Specific and substantiated, e.g., from PDF):</label>
+            <textarea id="objective" rows="3" placeholder="E.g., 4th year student with interest in X..."></textarea>
+
+            <label for="education">Education (Reverse chronological, e.g., Degree, University, Year, CGPA/Aggregate):</label>
+            <textarea id="education" rows="4" placeholder="E.g., B.Tech CSE, IIT Madras, 2020-2024, CGPA 8.5"></textarea>
+4
+            <label for="internships">Internships/Projects (With timelines and brief descriptions, relevant only):</label>
+            <textarea id="internships" rows="5" placeholder="E.g., Intern at ABC, June-Aug 2023 – Developed app using Java"></textarea>
+
+            <label for="experience">Work Experience (If any, reverse chronological):</label>
+            <textarea id="experience" rows="4" placeholder="E.g., Analyst at DEF, 2022-Present – Managed team projects"></textarea>
+
+            <label for="skills">Skills (Relevant, no basics like Windows):</label>
+            <input type="text" id="skills" placeholder="E.g., Java, Python, Leadership">
+
+            <label for="achievements">Achievements/Co-curricular (Relevant, no redundancies):</label>
+            <textarea id="achievements" rows="3" placeholder="E.g., Won coding competition, 2023"></textarea>
+
+            <button type="submit">Generate Resume</button>
+        </form>
+    </section>
+
+    <!-- Resume Preview -->
+    <section id="resume-preview">
+        <h2>Your Resume Preview (PDF-Style Format)</h2>
+        <img id="resume-photo" src="" alt="Your Photo" style="display: none;">
+        <div id="resume-content"></div>
+        <button onclick="printResume()">Print/Save as PDF</button>
+    </section>
+
+    <script>
+        document.getElementById('resume-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const photoInput = document.getElementById('photo');
+            const objective = document.getElementById('objective').value;
+            const education = document.getElementById('education').value.split('\n').filter(line => line.trim()).map(line => `<li>${line}</li>`).join('');
+            const internships = document.getElementById('internships').value.split('\n').filter(line => line.trim()).map(line => `<li>${line}</li>`).join('');
+            const experience = document.getElementById('experience').value.split('\n').filter(line => line.trim()).map(line => `<li>${line}</li>`).join('');
+            const skills = document.getElementById('skills').value;
+            const achievements = document.getElementById('achievements').value.split('\n').filter(line => line.trim()).map(line => `<li>${line}</li>`).join('');
+
+            // Handle photo upload
+            let photoSrc = '';
+            if (photoInput.files.length > 0) {
+                const file = photoInput.files[0];
+                if (!file.type.startsWith('image/')) {
+                    alert('Please select a valid image file (JPEG/PNG).');
+                    return;
+                }
+                if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                    alert('File size must be under 5MB.');
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    photoSrc = event.target.result;
+                    document.getElementById('resume-photo').src = photoSrc;
+                    document.getElementById('resume-photo').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                document.getElementById('resume-photo').style.display = 'none';
+            }
+
+            const resumeHTML = `
+                <div class="resume-section">
+                    <h3>${name}</h3>
+                    <p><strong>Email:</strong> ${email} | <strong>Phone:</strong> ${phone}</p>
+                </div>
+                <div class="resume-section">
+                    <h4>Objective</h4>
+                    <p>${objective}</p>
+                </div>
+                <div class="resume-section">
+                    <h4>Education</h4>
+                    <ul>${education}</ul>
+                </div>
+                <div class="resume-section">
+                    <h4>Internships/Projects</h4>
+                    <ul>${internships}</ul>
+                </div>
+                <div class="resume-section">
+                    <h4>Work Experience</h4>
+                    <ul>${experience}</ul>
+                </div>
+                <div class="resume-section">
+                    <h4>Skills</h4>
+                    <p>${skills}</p>
+                </div>
+                <div class="resume-section">
+                    <h4>Achievements</h4>
+                    <ul>${achievements}</ul>
+                </div>
+            `;
+
+            document.getElementById('resume-content').innerHTML = resumeHTML;
+            document.getElementById('resume-preview').style.display = 'block';
+        });
+
+        function printResume() {
+            window.print(); // Opens print dialog for PDF saving.
+        }
+    </script>
+</body>
+</html>j
