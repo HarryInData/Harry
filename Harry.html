@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>I LOVE YOU DIKSHA – Scroll Story</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      scroll-behavior: smooth;
+      background: radial-gradient(circle at top, #3a1c71, #000000 60%);
+      color: #fff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body {
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Global floating hearts & sparkles background */
+    .heart {
+      position: fixed;
+      width: 18px;
+      height: 18px;
+      background: radial-gradient(circle at 30% 30%, #ffd1dc, #ff4b6e 60%, #ff1744);
+      transform: rotate(45deg);
+      animation: floatUp 9s linear infinite;
+      opacity: 0.75;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: inherit;
+      border-radius: 50%;
+    }
+    .heart::before {
+      top: -9px;
+      left: 0;
+    }
+    .heart::after {
+      left: -9px;
+      top: 0;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(45deg) scale(0.9); opacity: 0; }
+      15% { opacity: 0.9; }
+      100% { transform: translateY(-110vh) rotate(45deg) scale(1.3); opacity: 0; }
+    }
+
+    .sparkle {
+      position: fixed;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffffff, rgba(255,255,255,0));
+      opacity: 0;
+      animation: twinkle 3s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.2); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+
+    /* Sections (scenes) */
+    section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 2;
+    }
+    .scene-content {
+      max-width: 900px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px) scale(0.98);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    section.scene-visible .scene-content {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .scene-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 12px;
+    }
+
+    /* Scene 1 – intro text */
+    .scene1-title {
+      font-size: clamp(1.8rem, 4.5vw, 2.4rem);
+      margin-bottom: 20px;
+      text-shadow: 0 0 8px rgba(255,255,255,0.4);
+    }
+    .scene1-line {
+      font-size: clamp(1rem, 2.3vw, 1.2rem);
+      opacity: 0.9;
+    }
+
+    /* Scene 2 – main I LOVE YOU */
+    .main-title {
+      font-size: clamp(2.8rem, 6vw, 4.3rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(255, 64, 129, 0.9),
+                   0 0 25px rgba(255, 64, 129, 0.8);
+      animation: pulseGlow 2.2s ease-in-out infinite;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .heart-symbol {
+      color: #ff4b6e;
+      text-shadow: 0 0 12px rgba(255, 75, 110, 0.9);
+    }
+    @keyframes pulseGlow {
+      0%, 100% {
+        transform: scale(1) rotate(0deg);
+        text-shadow: 0 0 10px rgba(255, 64, 129, 0.9),
+                     0 0 25px rgba(255, 64, 129, 0.8);
+      }
+      50% {
+        transform: scale(1.06) rotate(-1.5deg);
+        text-shadow: 0 0 18px rgba(255, 128, 171, 1),
+                     0 0 35px rgba(255, 64, 129, 1);
+      }
+    }
+
+    .name {
+      margin-top: 8px;
+      font-family: "Great Vibes", cursive;
+      font-size: clamp(2.4rem, 5.2vw, 3.4rem);
+      background: linear-gradient(90deg,
+        #ff8a80,
+        #ff80ab,
+        #ea80fc,
+        #8c9eff,
+        #80d8ff,
+        #a7ffeb,
+        #ff8a80);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+      animation: rainbowTrail 6s linear infinite, nameSparkle 2.5s ease-in-out infinite;
+      position: relative;
+    }
+    @keyframes rainbowTrail {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes nameSparkle {
+      0%, 100% { text-shadow: 0 0 6px rgba(255,255,255,0.5); }
+      50% { text-shadow: 0 0 14px rgba(255,255,255,1); }
+    }
+
+    /* Confetti & particles */
+    #confetti-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 3;
+    }
+    .confetti {
+      position: absolute;
+      animation: fall 3s linear forwards;
+      font-size: 20px;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    .particle {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff, transparent);
+      pointer-events: none;
+      opacity: 0.9;
+      z-index: 3;
+    }
+
+    /* Scene 3 – romantic lines */
+    #messages-container {
+      margin-top: 20px;
+      min-height: 150px;
+    }
+    .message-line {
+      font-size: clamp(1rem, 2.4vw, 1.3rem);
+      margin: 6px 0;
+      opacity: 0;
+      transform: translateY(10px);
+      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4));
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .message-line.visible {
+      animation: fadeUp 0.7s ease-out forwards;
+    }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .typing-caret {
+      display: inline-block;
+      width: 1px;
+      background: #fff;
+      margin-left: 2px;
+      animation: blink 0.8s step-end infinite;
+      height: 1.1em;
+      vertical-align: text-bottom;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    /* Scene 4 – final */
+    .scene4-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 14px;
+      text-shadow: 0 0 14px rgba(255,255,255,0.7);
+    }
+    .scene4-sub {
+      font-size: clamp(1.1rem, 2.3vw, 1.4rem);
+      opacity: 0.9;
+    }
+
+    /* Replay button */
+    .btn-replay {
+      border: none;
+      padding: 10px 22px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #ff4081, #ff9100);
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(255, 64, 129, 0.8);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+      margin-top: 20px;
+    }
+    .btn-replay:hover {
+      transform: translateY(-1px) scale(1.03);
+      box-shadow: 0 0 18px rgba(255, 111, 0, 0.9);
+      filter: brightness(1.05);
+    }
+    .btn-replay:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 0 6px rgba(255, 64, 129, 0.6);
+    }
+    .hint {
+      margin-top: 10px;
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+
+    @media (max-width: 480px) {
+      .main-title {
+        line-height: 1.2;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- global floating decoration -->
+  <div id="confetti-container"></div>
+
+  <!-- Scene 1: intro -->
+  <section id="scene1">
+    <div class="scene-content">
+      <div class="scene-label">Scene 1 · Once upon a night</div>
+      <div class="scene1-title">Before I found you, nights were just nights…</div>
+      <p class="scene1-line">
+        Scroll down slowly, press play on the music if needed, and watch what my heart wants to say to you, Diksha.
+      </p>
+    </div>
+  </section>
+
+  <!-- Scene 2: main I LOVE YOU -->
+  <section id="scene2">
+    <div class="scene-content">
+      <div class="scene-label">Scene 2 · The moment</div>
+      <div id="mainTitle" class="main-title">
+        I <span class="heart-symbol">♥</span> YOU DIKSHA
+      </div>
+      <div class="name">Diksha</div>
+      <p class="hint">Tap the big text or just enjoy the scroll… the magic will happen.</p>
+    </div>
+  </section>
+
+  <!-- Scene 3: romantic lines -->
+  <section id="scene3">
+    <div class="scene-content">
+      <div class="scene-label">Scene 3 · What my heart says</div>
+      <div id="messages-container"></div>
+    </div>
+  </section>
+
+  <!-- Scene 4: final -->
+  <section id="scene4">
+    <div class="scene-content">
+      <div class="scene-label">Scene 4 · Until I found you</div>
+      <div class="scene4-title">Until I found you, I didn’t know what “home” felt like.</div>
+      <p class="scene4-sub">
+        Now every heartbeat, every little moment, and every dream has the same answer: you, Diksha.
+      </p>
+      <button id="replayBtn" class="btn-replay">Replay our little movie</button>
+      <div class="hint">Make sure your song “until-i-found-you.mp3” is in the same folder as this file.</div>
+    </div>
+  </section>
+
+  <!-- Music: you must place "until-i-found-you.mp3" near this file -->
+  <audio id="bg-music" src="until-i-found-you.mp3" loop></audio>
+
+  <script>
+    // ========= CONFIG =========
+    const romanticLines = [
+      "You’re my favorite chapter in this whole life story.",
+      "Loving you feels like home, no matter where I am.",
+      "You make ordinary days feel like something magical.",
+      "Still choosing you. Always choosing you.",
+      "You’re the reason my heart feels so full.",
+      "You were the best surprise my heart ever got.",
+      "Life is full of surprises, but you’re my favorite one.",
+      "I never saw you coming, and that makes me love you even more.",
+      "I never planned this, but now I want to plan forever with you."
+    ];
+
+    const typingSpeed = 40;
+    const lineDelay = 650;
+
+    const bgMusic = document.getElementById('bg-music');
+
+    function tryPlayMusic() {
+      bgMusic.play().catch(() => {
+        // user must interact; handled below
+      });
+    }
+
+    window.addEventListener('click', tryPlayMusic, { once: true });
+    window.addEventListener('touchstart', tryPlayMusic, { once: true });
+
+    // Floating hearts
+    function createFloatingHearts(count = 24) {
+      for (let i = 0; i < count; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.bottom = '-10vh';
+        const duration = 7 + Math.random() * 5;
+        heart.style.animationDuration = duration + 's';
+        heart.style.animationDelay = (Math.random() * -duration) + 's';
+        document.body.appendChild(heart);
+      }
+    }
+
+    // Sparkles
+    function createSparkles(count = 25) {
+      for (let i = 0; i < count; i++) {
+        const s = document.createElement('div');
+        s.className = 'sparkle';
+        const x = 50 + (Math.random() * 40 - 20);
+        const y = 40 + (Math.random() * 40 - 20);
+        s.style.left = x + 'vw';
+        s.style.top = y + 'vh';
+        s.style.animationDelay = (Math.random() * 3) + 's';
+        document.body.appendChild(s);
+      }
+    }
+
+    // Confetti + particles
+    const confettiContainer = document.getElementById('confetti-container');
+
+    function triggerConfetti(bursts = 80) {
+      const emojis = ['🎉', '✨', '💖', '💝', '💫'];
+      for (let i = 0; i < bursts; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.animationDuration = (2 + Math.random() * 2.5) + 's';
+        confettiContainer.appendChild(c);
+        setTimeout(() => c.remove(), 4000);
+      }
+    }
+
+    function createExplosion(x, y, colorSet) {
+      const colors = colorSet || ['#ff8a80', '#ff80ab', '#ea80fc', '#8c9eff', '#a7ffeb', '#ffffff'];
+      const count = 70;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = x + 'px';
+        p.style.top = y + 'px';
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        p.style.background = color;
+        document.body.appendChild(p);
+
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 2 + Math.random() * 6;
+        const vx = Math.cos(angle) * speed;
+        const vy = Math.sin(angle) * speed;
+        let life = 0;
+        const maxLife = 45 + Math.random() * 30;
+
+        function animateParticle() {
+          life++;
+          const nx = x + vx * life;
+          const ny = y + vy * life + 0.08 * life * life;
+          p.style.transform = `translate(${nx - x}px, ${ny - y}px) scale(${Math.max(1 - life / maxLife, 0.1)})`;
+          p.style.opacity = String(Math.max(1 - life / maxLife, 0));
+          if (life < maxLife) {
+            requestAnimationFrame(animateParticle);
+          } else {
+            p.remove();
+          }
+        }
+        requestAnimationFrame(animateParticle);
+      }
+    }
+
+    function explodeMainTitle() {
+      const mainTitleEl = document.getElementById('mainTitle');
+      const rect = mainTitleEl.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      createExplosion(centerX, centerY);
+      triggerConfetti(60);
+    }
+
+    // Romantic lines typing (Scene 3)
+    const messagesContainer = document.getElementById('messages-container');
+    let currentLineIndex = 0;
+    let linesPlaying = false;
+
+    function clearMessages() {
+      messagesContainer.innerHTML = '';
+      currentLineIndex = 0;
+    }
+
+    function typeLine(line, onComplete) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'message-line';
+      const textSpan = document.createElement('span');
+      const caret = document.createElement('span');
+      caret.className = 'typing-caret';
+      wrapper.appendChild(textSpan);
+      wrapper.appendChild(caret);
+      messagesContainer.appendChild(wrapper);
+      wrapper.classList.add('visible');
+
+      let idx = 0;
+      function typeChar() {
+        if (idx <= line.length) {
+          textSpan.textContent = line.slice(0, idx);
+          idx++;
+          setTimeout(typeChar, typingSpeed);
+        } else {
+          caret.remove();
+          setTimeout(() => onComplete && onComplete(), lineDelay);
+        }
+      }
+      typeChar();
+    }
+
+    function playLinesSequence() {
+      if (linesPlaying) return;
+      linesPlaying = true;
+      clearMessages();
+      function next() {
+        if (currentLineIndex >= romanticLines.length) return;
+        const line = romanticLines[currentLineIndex];
+        typeLine(line, () => {
+          currentLineIndex++;
+          next();
+        });
+      }
+      next();
+    }
+
+    // Scroll-triggered scenes
+    const scenes = document.querySelectorAll('section');
+    const mainTitleEl = document.getElementById('mainTitle');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('scene-visible');
+          if (entry.target.id === 'scene2') {
+            explodeMainTitle();
+          }
+          if (entry.target.id === 'scene3') {
+            playLinesSequence();
+          }
+        }
+      });
+    }, { threshold: 0.4 });
+
+    scenes.forEach(scene => observer.observe(scene));
+
+    mainTitleEl.addEventListener('click', explodeMainTitle);
+
+    // Replay button (scroll to top + restart)
+    const replayBtn = document.getElementById('replayBtn');
+    replayBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(() => {
+        linesPlaying = false;
+        clearMessages();
+        triggerConfetti(60);
+        tryPlayMusic();
+      }, 600);
+    });
+
+    // Initial setup
+    window.addEventListener('load', () => {
+      createFloatingHearts();
+      createSparkles();
+      triggerConfetti(40);
+      tryPlayMusic();
+    });
+  </script>
+</body>
+</html>
